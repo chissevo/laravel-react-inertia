@@ -7,15 +7,20 @@ import TextAreaInput from "@/Components/TextAreaInput";
 import SelectInput from "@/Components/SelectInput";
 
 
-export default function Create({auth, product})
+export default function Create({auth, product, categories})
 {
     const {data, setData, post, errors, reset } = useForm({
 
         image: "",
-        name:           product.name || "",
-        status:         product.status || "",
-        description:    product.description || "",
-        due_date:       product.due_date || "",
+        name:               product.product_name || "",
+        status:             product.status || "",
+        description:        product.description || "",
+        due_date:           product.due_date || "",
+        preco_compra:       product.purchase_price || "",
+        preco_venda:        product.sale_price || "",
+        quantidade:         product.quantity || "",
+        product_category:   product.category_id || "",
+
         _method:        "PUT"
     })
 
@@ -31,105 +36,130 @@ export default function Create({auth, product})
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Editar: { product.name}
+                        Editar: { product.product_name}
                     </h2>
                 </div>
             }>
 
             <Head title="Products" />
-
+            {/** 15:09, Reclama;#ao por nao conseguir usufruir do plano de 300 Kz carreagado*/}
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <form onSubmit={onSubmit} className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                             <div className="grid gap-1 grid-cols-2 mt-4">
+                              <div>
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="product_name"
+                                        value="Mome do Produto" />
+                                    <TextInput
+                                        name="name"
+                                        id="product_name"
+                                        type="text"
+                                        value={data.name}
+                                        isFocused={ true }
+                                        className="mt-1 blcok w-full"
+                                        onChange={(e) => setData('product_name', e.target.value)} />
 
-                                { product.image_path && <div className="mb-4">
-                                        <img src={ product.image_path } className="ww-64" />
-                                    </div>}
-                                <div>
-                                    <div className="mt-4">
-                                        <InputLabel
-                                            htmlFor="product_name"
-                                            value="Nome Producto" />
-                                        <TextInput
-                                            name="name"
-                                            id="product_image_path"
-                                            type="text"
-                                            value={data.name}
-                                            isFocused={ true }
-                                            className="mt-1 blcok w-full"
-                                            onChange={(e) => setData('name', e.target.value)} />
-
-                                            <InputError message={errors.name} className="mt-2" />
-                                    </div>
-
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="product_description"
-                                            value="Descrição do Producto" />
-                                        <TextAreaInput
-                                            name="description"
-                                            id="product_description"
-                                            value={data.description}
-                                            className="mt-1 blcok w-full"
-                                            onChange={(e) => setData('description', e.target.value)} />
-
-                                            <InputError message={errors.description} className="mt-2" />
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <InputLabel
-                                            htmlFor="product_image_path"
-                                            value="Imagem Producto" />
-                                        <TextInput
-                                            name="image"
-                                            id="product_image_path"
-                                            type="file"
-                                            className="mt-1 blcok w-full"
-                                            onChange={(e) => setData('image', e.target.files[0])} />
-
-                                            <InputError message={errors.image} className="mt-2" />
-                                    </div>
+                                        <InputError message={errors.product_name} className="mt-2" />
                                 </div>
 
                                 <div>
-                                    <div className="mt-4">
-                                        <InputLabel
-                                            htmlFor="product_due_date"
-                                            value="Data de Conclusão"
-                                        />
-                                        <TextInput
-                                            name="due_date"
-                                            id="product_due_date"
-                                            type="date"
-                                            value={ data.due_date }
-                                            className="mt-1 blcok w-full"
-                                            onChange={(e) => setData('due_date', e.target.value)} />
+                                    <InputLabel
+                                        htmlFor="product_description"
+                                        value="Descrição do Produto" />
+                                    <TextAreaInput
+                                        name="description"
+                                        id="product_description"
+                                        value={data.description}
+                                        className="mt-1 blcok w-full"
+                                        onChange={(e) => setData('description', e.target.value)} />
 
-                                            <InputError message={errors.due_date} className="mt-2" />
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <InputLabel
-                                            htmlFor="product_status"
-                                            value="Estado do Producto" />
-                                        <SelectInput
-                                            name="status"
-                                            id="product_status"
-                                            type="text"
-                                            value={data.status}
-                                            className="mt-1 blcok w-full"
-                                            onChange={(e) => setData('status', e.target.value)}>
-
-                                            <option value="">Seleccionar Estado</option>
-                                            <option value="pending">Pendente</option>
-                                            <option value="in_progress">Em Progresso</option>
-                                            <option value="completed">Concluído</option>
-                                        </SelectInput>
-                                        <InputError message={errors.status} className="mt-2" />
-                                    </div>
+                                        <InputError message={errors.description} className="mt-2" />
                                 </div>
+
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="purchase_price"
+                                        value="Preço de Compra" />
+                                    <TextInput
+                                        name="purchase_price"
+                                        id="purchase_price"
+                                        type="number"
+                                        value={data.preco_compra}
+                                        className="mt-1 blcok w-full"
+                                        onChange={(e) => setData('preco_compra', e.target.value)} />
+
+                                        <InputError message={errors.preco_compra} className="mt-2" />
+                                </div>
+
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="product_image_path"
+                                        value="Product Image" />
+                                    <TextInput
+                                        name="image_path"
+                                        id="image_path_id"
+                                        type="file"
+                                        className="mt-1 blcok w-full"
+                                        onChange={(e) => setData('image_path', e.target.files[0])} />
+
+                                        <InputError message={errors.image_path} className="mt-2" />
+                                </div>
+                              </div>
+
+                              <div>
+                                  <div className="mt-4">
+                                      <InputLabel
+                                          htmlFor="product_category"
+                                          value="Categoria do Produto" />
+                                          <pre>{ JSON.stringify(categories.data)}</pre>
+                                      <SelectInput
+                                          name="category_id"
+                                          id="product_category_id"
+                                          defaultValue={ product.product_category }
+                                          className="mt-1 blcok w-full"
+                                          onChange={ e => searchFieldChanged('product_category', e.target.value) }>
+                                          <option>Seleccionar Categoria</option>
+                                          { categories.data.map(( category ) => (
+                                            <option value={category.id} key={ category.id }>{ category.name }</option>
+                                          ))}
+                                      </SelectInput>
+
+                                      <InputError message={errors.category_id} className="mt-2" />
+                                  </div>
+
+                                  <div className="mt-4">
+                                      <InputLabel
+                                          htmlFor="sale_price"
+                                          value="Preço de Venda" />
+                                      <TextInput
+                                          name="sale_price"
+                                          id="sale_price"
+                                          type="number"
+                                          value={data.preco_venda}
+                                          className="mt-1 blcok w-full"
+                                          onChange={(e) => setData('preco_venda', e.target.value)} />
+
+                                          <InputError message={errors.preco_venda} className="mt-2" />
+                                  </div>
+
+                                  <div className="mt-4">
+                                      <InputLabel
+                                          htmlFor="quantity"
+                                          value="Quatidade Adquirida" />
+                                      <TextInput
+                                          name="quantity"
+                                          id="quantity"
+                                          type="number"
+                                          value={data.quantidade}
+                                          className="mt-1 blcok w-full"
+                                          onChange={(e) => setData('quantidade', e.target.value)} />
+
+                                          <InputError message={errors.quantidade} className="mt-2" />
+                                  </div>
+                            </div>
                             </div>
 
                             <div className="mt-4 text-right">
@@ -144,7 +174,6 @@ export default function Create({auth, product})
                                     Actualizar
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>

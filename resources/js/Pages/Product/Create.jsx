@@ -117,15 +117,12 @@ export default function Create({ auth, products, categories })
 
                                             <option value="">Seleccionar Categoria</option>
                                             { categories.data.map(( category ) => (
-                                              <option value={category.id} key={ category.id }>
-                                                { category.name }
-                                              </option>
+                                              <option value={category.id} key={ category.id }>{ category.name }</option>
                                             ))}
                                         </SelectInput>
 
                                         <InputError message={errors.category_id} className="mt-2" />
                                     </div>
-
                                     <div className="mt-4">
                                         <InputLabel
                                             htmlFor="sale_price"

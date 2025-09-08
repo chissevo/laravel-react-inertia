@@ -40,14 +40,14 @@ export default function Create({auth})
                             <div className="">
                                 <div>
                                     <div className="mt-4">
-                                        <InputLabel 
+                                        <InputLabel
                                             htmlFor="user_name"
                                             value="Nome" />
-                                        <TextInput 
-                                            name="name" 
+                                        <TextInput
+                                            name="name"
                                             id="user_name"
                                             type="text"
-                                            value={data.name} 
+                                            value={data.name}
                                             isFocused={ true }
                                             className="mt-1 blcok w-full"
                                             onChange={(e) => setData('name', e.target.value)} />
@@ -56,13 +56,13 @@ export default function Create({auth})
                                     </div>
 
                                     <div>
-                                        <InputLabel 
+                                        <InputLabel
                                             htmlFor="user_email"
                                             value="Email" />
                                         <TextInput
-                                            name="email" 
+                                            name="email"
                                             id="user_email"
-                                            value={data.email} 
+                                            value={data.email}
                                             className="mt-1 blcok w-full"
                                             onChange={(e) => setData('email', e.target.value)} />
 
@@ -70,11 +70,11 @@ export default function Create({auth})
                                     </div>
 
                                     <div className="mt-4">
-                                        <InputLabel 
+                                        <InputLabel
                                             htmlFor="user_password"
                                             value="Password" />
-                                        <TextInput 
-                                            name="password" 
+                                        <TextInput
+                                            name="password"
                                             id="user_password"
                                             type="password"
                                             className="mt-1 blcok w-full"
@@ -84,14 +84,14 @@ export default function Create({auth})
                                     </div>
 
                                     <div className="mt-4">
-                                        <InputLabel 
+                                        <InputLabel
                                             htmlFor="user_password_confirmation"
                                             value="Confirmar Password" />
-                                        <TextInput 
-                                            name="password_confirmation" 
+                                        <TextInput
+                                            name="password_confirmation"
                                             id="user_password_confirmation"
                                             type="password"
-                                            value={data.due_date} 
+                                            value={data.due_date}
                                             className="mt-1 blcok w-full"
                                             onChange={(e) => setData('password_confirmation', e.target.value)} />
 
@@ -99,13 +99,13 @@ export default function Create({auth})
                                     </div>
 
                                     <div className="mt-4 text-right">
-                                    <Link href={route("user.index")} 
+                                    <Link href={route("user.index")}
                                             className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow
                                             transition-all hover:bg-gray-200 mr-2">
                                         Cancelar
                                     </Link>
 
-                                    <button 
+                                    <button
                                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow translate-all hover:bg-emerald-600">
                                         Registar
                                     </button>
@@ -116,6 +116,6 @@ export default function Create({auth})
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout> 
+        </AuthenticatedLayout>
     )
 }

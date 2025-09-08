@@ -4,10 +4,11 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import { FolderIcon } from '@heroicons/react/16/solid';
 
-export default function AuthenticatedLayout({ user, header, children }) {
+export default function AuthenticatedLayout({ user, header, children })
+{
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -33,17 +34,74 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                   Dados dos Clientes
                                 </NavLink>
 
-                                <NavLink href={route('product.index')} active={route().current('product.index')}>
-                                  Produtos
-                                </NavLink>
+                                <div className="hidden sm:flex sm:items-center sm:ms-6">
+                                    <div className="ms-3 relative">
+                                      <Dropdown>
+                                        <Dropdown.Trigger>
+                                          <span className="inline-flex rounded-md">
+                                            <button
+                                              type="button"
+                                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                              Produtos
+                                              <svg
+                                                className="ms-2 -me-0.5 h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                              </svg>
+                                            </button>
+                                          </span>
+                                        </Dropdown.Trigger>
 
-                                <NavLink href={route('category.index')} active={route().current('category.index')}>
-                                  Categria
-                                </NavLink>
+                                        <Dropdown.Content>
+                                            <Dropdown.Link href={route('product.index')} active={route().current('product.index')}>Produtos</Dropdown.Link>
 
-                                <NavLink href={route('user.index')} active={route().current('user.index')}>
-                                    Usuários
-                                </NavLink>
+                                            <Dropdown.Link href={route('category.index')} active={route().current('category.index')}>Categrias</Dropdown.Link>
+                                        </Dropdown.Content>
+
+                                      </Dropdown>
+                                    </div>
+                                  </div>
+
+                              <div className="hidden sm:flex sm:items-center sm:ms-6">
+                                <div className="ms-3 relative">
+                                  <Dropdown>
+                                    <Dropdown.Trigger>
+                                      <span className="inline-flex rounded-md">
+                                        <button
+                                          type="button"
+                                          className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                        >
+                                          Documentos
+                                          <svg
+                                            className="ms-2 -me-0.5 h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clipRule="evenodd"
+                                            />
+                                          </svg>
+                                        </button>
+                                      </span>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <Dropdown.Link href={route('cart.index')}>Factura</Dropdown.Link>
+                                        <Dropdown.Link href={route('cart.index')}>Factura - Recibo</Dropdown.Link>
+                                        <Dropdown.Link href={route('cart.index')}>Factura - Forma</Dropdown.Link>
+                                    </Dropdown.Content>
+                                  </Dropdown>
+                                </div>
+                              </div>
                             </div>
                         </div>
 
@@ -76,6 +134,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
+                                        <Dropdown.Link href={route('user.index')}>Configurações</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Sair
                                         </Dropdown.Link>

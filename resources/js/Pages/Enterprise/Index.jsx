@@ -16,11 +16,11 @@ export default function Index({ auth, enterprises, queryParams = null, success }
 
             {/*<pre>{ JSON.stringify(enterprises) }</pre>*/}
 
-            {enterprises &&
-              (<Link href={route("enterprise.create")}
+            { !enterprises &&
+              <Link href={route("enterprise.create")}
                 className="bg-emerald-500 py-1 px-3 text-white rounded shadow translate-all hover:bg-emerald-600">
                   Registar Empresa
-              </Link>)
+              </Link>
             }
 
          </div>

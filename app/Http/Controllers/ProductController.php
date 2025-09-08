@@ -6,7 +6,6 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\UserResource;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -21,29 +20,27 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $sortField      = request("sort_field", "created_at");
-        $sortDirection  = request("sort_direction", "desc");
+        $sortField = request("sort_field", "created_at");
+        $sortDirection = request("sort_direction", "desc");
 
         $busca = Product::query();
 
-        if (request('name'))
-        {
-            $busca->where("name", "like","%". request("name") .  "%");
+        if (request('name')) {
+            $busca->where("name", "like", "%" . request("name") . "%");
         }
 
-        if (request('status'))
-        {
+        if (request('status')) {
             $busca->where("status", request("status"));
         }
 
         $products = $busca->orderBy($sortField, $sortDirection)
-                    ->paginate(10)
-                    ->onEachSide(1);
+            ->paginate(10)
+            ->onEachSide(1);
 
         return inertia("Product/Index", [
-            "products"      => ProductResource::collection($products),
-            "queryParams"   => request()->query() ?: null,
-            "success"       => session("success"),
+            "products" => ProductResource::collection($products),
+            "queryParams" => request()->query() ?: null,
+            "success" => session("success"),
         ]);
     }
 
@@ -52,11 +49,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $products   = Product::all();
+        $products = Product::all();
         $categories = Category::all();
 
         return inertia("Product/Create", [
-            'products'   => ProductResource::collection($products),
+            'products' => ProductResource::collection($products),
             'categories' => CategoryResource::collection($categories),
         ]);
     }
@@ -70,12 +67,11 @@ class ProductController extends Controller
         /** @var $image \Illuminate\Http\UploadedFile */
         $image = $product['image_path'] ?? null;
 
-        $product['created_by']         = Auth::id();
-        $product['updated_by']         = Auth::id();
-        $product['assigned_user_id']   = Auth::id();
+        $product['created_by'] = Auth::id();
+        $product['updated_by'] = Auth::id();
+        $product['assigned_user_id'] = Auth::id();
 
-        if ($image)
-        {
+        if ($image) {
             $product['image_path'] = $image->store('produtos/' . Str::random(), 'public');
         }
 
@@ -91,27 +87,25 @@ class ProductController extends Controller
         dd($product);
         $query = $product->categories();
 
-        $sortField      = request("sort_field", "created_at");
-        $sortDirection  = request("sort_direction", "desc");
+        $sortField = request("sort_field", "created_at");
+        $sortDirection = request("sort_direction", "desc");
 
-        if (request('name'))
-        {
-            $query->where("name", "like","%". request("name") .  "%");
+        if (request('name')) {
+            $query->where("name", "like", "%" . request("name") . "%");
         }
 
-        if (request('status'))
-        {
+        if (request('status')) {
             $query->where("status", request("status"));
         }
 
         $categories = $query->orderBy($sortField, $sortDirection)
-                    ->paginate(10)
-                    ->onEachSide(1);
+            ->paginate(10)
+            ->onEachSide(1);
 
         return inertia('Product/Show', [
-            'products'           => new ProductResource($product),
-            'categories'        => CategoryResource::collection($categories),
-            'queryParams'       => request()->query() ?: null,
+            'products' => new ProductResource($product),
+            'categories' => CategoryResource::collection($categories),
+            'queryParams' => request()->query() ?: null,
         ]);
     }
 
@@ -120,10 +114,15 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return inertia('Product/Edit',
-        [
-            'product' => new ProductResource($product)
-        ]);
+        $categories = Category::all();
+
+        return inertia(
+            'Product/Edit',
+            [
+                'product' => new ProductResource($product),
+                'categories' => CategoryResource::collection($categories),
+            ]
+        );
     }
 
     /**
@@ -139,10 +138,8 @@ class ProductController extends Controller
 
         $data['updated_by'] = Auth::id();
 
-        if ($image)
-        {
-            if ($product->image_path)
-            {
+        if ($image) {
+            if ($product->image_path) {
                 Storage::disk('public')->deleteDirectory(dirname($product->image_path));
             }
             $data['image_path'] = $image->store('product/' . Str::random(), 'public');
@@ -162,8 +159,7 @@ class ProductController extends Controller
 
         $product->tasks()->delete();
 
-        if ($product->image_path)
-        {
+        if ($product->image_path) {
             Storage::disk('public')->deleteDirectory(dirname($product->image_path));
         }
 

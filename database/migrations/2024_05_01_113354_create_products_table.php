@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('product_name');
             $table->longText('description')->nullable();
-            $table->double('purchase_price');
-            $table->double('sale_price');
+            $table->decimal('purchase_price', total: 8, places: 2);
+            $table->decimal('sale_price', total: 8, places: 2);
             $table->integer('quantity');
             $table->string('image_path')->nullable();
             $table->foreignId('category_id')->constrained('categories');

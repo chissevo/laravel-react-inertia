@@ -1,13 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import SelectInput from "@/Components/SelectInput";
 import { Head, useForm, Link } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
-import TextAreaInput from "@/Components/TextAreaInput";
-//import { useEffect, useState } from "react/cjs/react.production.min";
-import axios from "axios";
-
 
 export default function Create({auth})
 {
