@@ -39,12 +39,6 @@ Route::middleware(['auth', 'verified'])->group(function()
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     });
 
-    /*Route::get('/home', function(){
-        return inertia::render('Cart.Cart', [
-            'cart'      => session()->get('cart', []),
-            'products'  => Product::all(),
-        ]);
-    })->name('home');*/
 });
 
 Route::middleware('auth')->group(function () {
