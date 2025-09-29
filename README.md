@@ -2,7 +2,7 @@
 ![React](https://cdn.worldvectorlogo.com/logos/react-2.svg)
 ![MySQL](https://raw.githubusercontent.com/inertiajs/.github/master/LOGO.png)
 
-## 🚀 Sistema de Facturando
+## 🚀 Sistema de Facturação
 
 Aplicação web desenvolvido no **Laravel, React e Inertia** para gestão e emissão de faturas, 
 com autenticação de utilizadores, dashboard interativo e relatórios de vendas.:
