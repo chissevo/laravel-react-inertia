@@ -20,20 +20,30 @@ com autenticação de utilizadores, dashboard interativo e relatórios de vendas
 - [Docker / Laravel Sail](https://laravel.com/docs/sail)
 - MySQL
 
-## Instalação
+## Requisitos Necessários
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [WSL 2](https://learn.microsoft.com/pt-br/windows/wsl/install) (somente Windows)
+- Git
 
+## Configuração Inicial
 1. Clonar o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repo.git
-   cd seu-repo
+    git clone https://github.com/seu-usuario/seu-repo.git
+    cd seu-repo
 
-2. Copiar o Arquivo .env:
+2. Instalar as Dependências: 
+    ```bash
+    docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+
+3. Copiar o Arquivo .env:
     ```bash
    cp .env.example .env
 
-3. Instale as Dependências:
-    ```bash
-    ./vendor/bin/sail composer install
 4. Suba o containers:
     ```bash
     ./vendor/bin/sail up -d
@@ -46,7 +56,12 @@ com autenticação de utilizadores, dashboard interativo e relatórios de vendas
 7. Iniciar o servidor de desenvolvimento:
     ```bash
     ./vendor/bin/sail artisan serve
+
+8. Instalar dependências JS
+    ```bash
+    ./vendor/bin/sail npm install
     ./vendor/bin/sail npm run dev
+
 ## 🧪 Testes
 1. Para rodar os testes automatizados:
     ```bash
